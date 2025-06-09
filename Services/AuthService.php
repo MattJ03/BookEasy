@@ -13,4 +13,9 @@ class AuthService {
 
     }
 
+    public function login(array $credentials) {
+        $user = User::where('email', $credentials['email'])->first();
+        Hash::check(!$user->password && $credentials->password);
+    }
+
 }
