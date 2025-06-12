@@ -14,27 +14,27 @@ class AuthController extends Controller
           'email' => 'required|email|max:35',
           'password' => 'required|min:3|max:15',
         ]);
-        
+
         $user = $authService->register($credentials);
         return response()->json(['Message' => 'User Registered successfully', 'user' => $user]);
     }
 
     public function login(AuthService $authService, Request $request) {
         $credentials = $request->validate([
-            'email' => 'required|email|max:15',
-            'password' => 'required|min:3|max:15',
+           'email' => 'required|email|max:35',
+           'password' => 'required|min:3|max:15',
         ]);
-           $token = $authService->login($credentials);
-           if(!$token) {
-            return response()->json(['message' => 'failed to login'], 401);
-           }
-            return response()->json([
-            'token' => $token,
-            'token_type' => 'Bearer']);
+        $token = $authService->login($credentials);
+        if(!$token) {
+            return response()->json(['message' => 'unauthorised'], 401);
+        }
+        else {
+            return response()->json(['access_token' => $token, 'token_type' => 'Bearer'], 200);
+        }
     }
-     
     public function logout(AuthService $authService, Request $request) {
-        return $authService->logout($request);
-        return response()->json(['message' => 'logged out']);
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['message' => 'successfully logged out'], 200);
     }
+
 }
