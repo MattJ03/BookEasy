@@ -127,4 +127,42 @@ class AuthTest extends TestCase
             'password' => 'JB',
         ]);
     }
+
+    public function test_over_max_password(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => 'Alison',
+            'email' => 'Alison@me.com',
+            'password' => 'WhatIsMyPasswordAgain?',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users',[
+            'email' => 'Alison@me.com',
+        ]);
+    }
+
+    public function test_completely_empty_form(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => '',
+            'email' => '',
+            'password' => '',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', [
+            'name' => '']);
+    }
+
+    public function test_login_user(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => 'Adam',
+            'email' => 'Adam@icloud.com',
+            'password' => 'therealpassword',
+                ]);
+        $response->assertStatus(200);
+        $response2 = $this->postJson('/api/login', [
+            'email' => 'Adam@icloud.com',
+            'password' => 'therealpassword',
+        ]);
+        $response2->assertStatus(200);
+        $this->assertAuthenticated($response2);
+    }
 }
