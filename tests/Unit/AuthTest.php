@@ -44,4 +44,87 @@ class AuthTest extends TestCase
         $this->assertDatabaseMissing('users', [
             'name' => 'Matt']);
     }
+
+    public function test_register_empty_password(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => 'Jake',
+            'email' => 'my@email.com',
+            'password' => '',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', [
+            'name' => 'Jake',
+        ]);
+    }
+
+    public function test_register_empty_name(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => '',
+            'email' => 'pauriac@email.me',
+            'password' => 'wwwhghwrwh',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', [
+            'email' => 'pauriac@email.me',
+        ]);
+    }
+
+    public function test_register_under_min_name(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => 'AO',
+            'email' => 'Ao@art.com',
+            'password' => 'hdhefueuefe',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', [
+            'name' => 'AO']);
+    }
+
+    public function test_register_over_max_name(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => 'hdjsklakdgbartholomewra',
+            'email' => 'longname@gmail.com',
+            'password' => 'superlongname',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', [
+            'email' => 'longname@gmail.com',
+        ]);
+    }
+
+    public function test_email_is_email(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => 'Lauren',
+            'email' => 'NotAnEmail',
+            'password' => 'hshsrhsah',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', [
+            'email' => 'NotAnEmail',
+        ]);
+    }
+
+    public function test_over_max_email(): void {
+        $response = $this->postJson('/api/register', [
+           'name' => 'Mark',
+           'email' => 'markismyrealnameandthisshouldnotstore',
+            'password' => 'hashfakepassword',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', [
+           'name' => 'Mark',
+        ]);
+    }
+
+    public function test_under_min_password(): void {
+        $response = $this->postJson('/api/register', [
+            'name' => 'Jack',
+            'email' => 'brady@icloud.com',
+            'password' => 'JB',
+        ]);
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', [
+            'password' => 'JB',
+        ]);
+    }
 }
