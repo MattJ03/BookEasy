@@ -16,10 +16,10 @@ class AuthService
         ]);
         return $user;
     }
-    public function login(array $data): User {
+    public function login(array $data): ?string {
         $user = User::where('email', $data['email'])->first();
         if(!$user || !Hash::check($data['password'], $user->password)) {
-            return response()->json(['error' => 'wrong credentials'], 402);
+            return null;
         }
         return $user->createToken('auth_token')->plainTextToken;
     }

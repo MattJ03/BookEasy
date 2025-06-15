@@ -162,7 +162,24 @@ class AuthTest extends TestCase
             'email' => 'Adam@icloud.com',
             'password' => 'therealpassword',
         ]);
-        $response2->assertStatus(200);
-        $this->assertAuthenticated($response2);
+        $response2->assertJsonStructure([
+            'access_token',
+            'token_type'
+        ]);
+    }
+
+    public function test_login_user_wrong_email(): void {
+        $response = $this->postJson('/api/register', [
+          'name' => 'Lenzo',
+           'email' => 'mlenzo@gmail.com',
+           'password' => 'secret123',
+        ]);
+        $response->assertStatus(200);
+        $response2 = $this->postJson('/api/login', [
+            'email' => 'Mark@gmail1.com',
+            'password' => 'secret123',
+        ]);
+       ;
+        $response2->assertStatus(401);
     }
 }
