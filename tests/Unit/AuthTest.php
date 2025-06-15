@@ -202,7 +202,53 @@ class AuthTest extends TestCase
              ->assertJson([
                  'message' => 'unauthorised',
              ]);
+    }
 
+    public function test_case_sensitive_email_login(): void {
+        $response = $this->postJson('/api/register', [
+           'name' => 'Stewart',
+           'email' => 'iamstewart@gmail.com',
+           'password' => 'stewarty123',
+        ]);
+        $response->assertStatus(200);
+        $response2 = $this->postJson('/api/login', [
+            'email' => 'IAMSTEWART@gmail.com',
+            'password' => 'stewarty123',
+        ]);
+        $response2->assertStatus(200)
+            ->assertJsonStructure([
+               'access_token', 'token_type',
+            ]);
+    }
+
+    public function test_case_sensitive_password(): void {
+        $response = $this->postJson('/api/register', [
+           'name' => 'Ellen',
+           'email' => 'ellen531@gmail.com',
+           'password' => 'ellenisme',
+        ]);
+        $response->assertStatus(200);
+        $response2 = $this->postJson('/api/login', [
+            'email' => 'ellen531@gmail.com',
+            'password' => 'ELLENISME',
+        ]);
+        $response2->assertStatus(401)
+            ->assertJson(['message' => 'unauthorised']);
+    }
+
+    public function test_email_contains_at_symbol(): void {
+        $response = $this->postJson('/api/register', [
+           'name' => 'Jane',
+           'email' => 'janenovember@gmail.com',
+           'password' => 'janesSecret',
+        ]);
+        $response->assertStatus(200);
+        $response2 = $this->postJson('/api/login', [
+            'email' => 'janenovember',
+            'password' => 'janesSecret',
+        ]);
+        $response2->assertStatus(422)
+            ->assertJson(['message' => 'The email field must be a valid email address.']);
     }
 
 }
