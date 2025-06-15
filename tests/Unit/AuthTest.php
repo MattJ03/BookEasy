@@ -251,4 +251,8 @@ class AuthTest extends TestCase
             ->assertJson(['message' => 'The email field must be a valid email address.']);
     }
 
+    public function test_unauthorised_upon_logout(): void {
+
+    }
+
 }
