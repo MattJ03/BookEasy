@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 
 
 class AuthTest extends TestCase
@@ -180,6 +181,28 @@ class AuthTest extends TestCase
             'password' => 'secret123',
         ]);
        ;
-        $response2->assertStatus(401);
+        $response2->assertStatus(401)
+            ->assertJson([
+            'message' => 'unauthorised',
+        ]);
     }
+
+    public function test_login_user_wrong_password(): void {
+         $response = $this->postJson('/api/register', [
+            'name' => 'Kathryn',
+            'email' => 'Kathryn@gmail.com',
+            'password' => 'rueKathryn',
+         ]);
+         $response->assertStatus(200);
+         $response2 = $this->postJson('/api/login', [
+             'email' => 'Kathryn@gmail.com',
+             'password' => 'fakepassword456',
+         ]);
+         $response2->assertStatus(401)
+             ->assertJson([
+                 'message' => 'unauthorised',
+             ]);
+
+    }
+
 }
