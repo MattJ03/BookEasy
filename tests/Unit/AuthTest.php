@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -252,7 +253,10 @@ class AuthTest extends TestCase
     }
 
     public function test_unauthorised_upon_logout(): void {
-
+     $user = User::factory()->create();
+     Sanctum::actingAs($user);
+     $response = $this->postJson('/api/logout');
+     $response->assertStatus(200);
     }
 
 }
