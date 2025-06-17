@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Policies\ListingPolicy;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ListingService;
 
 
 class ListingController extends Controller
@@ -14,35 +15,31 @@ class ListingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ListingService $listingService)
     {
-        $this->authorize('viewAny', Listing::class);
-        $listings = Listing::all();
-        return response()->json($listings);
+      $listings = Listing::all();
+      if(!$listings) {
+          return response()->json(['message' => 'No listings were found.'], 422);
+      }
+      return response()->json($listings, 200);
     }
 
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {                           //same as name in vue file
-        $path = $request->file('image')->store('images', 'public');
+    public function store(ListingService $listingService, Request $request)
+    {
 
         $validatedData = $request->validate([
-            'title' => 'required|string|max:100',
-           'price' => 'required|numeric|min:0',
-           'availability' => 'required|boolean',
-           'image_path' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
-        ]);
-        $listing = Listing::create([
-            'title' => $validatedData['title'],
-            'price' => $validatedData['price'],
-            'availability' => $validatedData['availability'],
-            'user_id' => Auth::user()->id,
-            'image_path' => $path,
-        ]);
-        return response()->json(['message' => 'Listing Added', 'listing' => $listing]);
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0|max:999999999',
+            'availability' => 'required|boolean',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+    ]);
+        $listing = $listingService->store($validatedData);
+        return response()->json($listing, 201);
+
     }
 
     /**
@@ -50,7 +47,10 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
-        //
+        $listing = Listing::find($listing->id);
+        if(!$listing) {
+            return response()->json(['message' => 'listing cannot be found,'], 401);
+        }
     }
 
     /**
