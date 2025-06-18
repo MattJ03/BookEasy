@@ -45,12 +45,13 @@ class ListingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Listing $listing)
+    public function show($id)
     {
-        $listing = Listing::find($listing->id);
+        $listing = Listing::find($id);
         if(!$listing) {
             return response()->json(['message' => 'listing cannot be found,'], 401);
         }
+        return response()->json($listing, 200);
     }
 
     /**
@@ -58,15 +59,23 @@ class ListingController extends Controller
      */
     public function edit(Listing $listing)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Listing $listing)
+    public function update(Request $request, Listing $listing, ListingService $listingService)
     {
-        //
+       $validatedData = $request->validatte([
+           'name' => 'required|string|max:255',
+           'price' => 'required|numeric|min:0|max:999999999',
+           'availability' => 'required|boolean',
+           'image_path' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+
+       ]);
+
+       $listingUpdated = $listingService->update($validatedData, $listing);
     }
 
     /**
