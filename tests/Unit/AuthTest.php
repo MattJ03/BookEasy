@@ -252,11 +252,27 @@ class AuthTest extends TestCase
             ->assertJson(['message' => 'The email field must be a valid email address.']);
     }
 
-    public function test_unauthorised_upon_logout(): void {
-     $user = User::factory()->create();
-     Sanctum::actingAs($user);
-     $response = $this->postJson('/api/logout');
-     $response->assertStatus(200);
+    public function test_logout_successfully(): void {
+        // Register user
+        $this->postJson('/api/register', [
+            'name' => 'Randy',
+            'email' => 'randy566@gmail.com',
+            'password' => 'rere',
+        ])->assertStatus(200);
+
+        // Login user and get token
+        $loginResponse = $this->postJson('/api/login', [
+            'email' => 'randy566@gmail.com',
+            'password' => 'rere',
+        ])->assertStatus(200);
+
+        $token = $loginResponse->json('access_token');
+
+        // Logout using token
+        $logoutResponse = $this->withHeader('Authorization', "Bearer $token")
+            ->postJson('/api/logout');
+
+        $logoutResponse->assertStatus(200);
     }
 
 }

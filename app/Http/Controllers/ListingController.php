@@ -76,6 +76,7 @@ class ListingController extends Controller
        ]);
 
        $listingUpdated = $listingService->update($validatedData, $listing);
+       return response()->json($listingUpdated, 200);
     }
 
     /**
@@ -83,6 +84,6 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing)
     {
-        //
+        $listing->delete();
     }
 }
