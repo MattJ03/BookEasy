@@ -16,7 +16,7 @@
             <input v-model="form.password" type="password" required />
         </div>
         <button type="submit" class="submit-button">Register</button>
-        <router-link to="login"> Already have an account?</router-link>
+        <router-link to="login">  Already have an account?</router-link>
          </form>
     </div>
 </template>
@@ -55,15 +55,16 @@
 <style scoped>
 .registration-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 400px;
-    background: #fff;
-    color: #2c3e50;
-    border-radius: 1px;
+    max-width: 500px;
+    background: #a7151d;
+    color: #ffffff;
+    border-radius: 12px;
     padding: 2rem;
-    text-align: center;
-
+    text-align: left;
+    margin: 100px auto;
 }
 .form-group {
     margin-bottom: 1rem;
@@ -82,6 +83,9 @@
     border: none;
     border-radius: 4px;
 
+}
+.submit-button:hover {
+    background-color: #4a5568;
 }
 
 </style>
