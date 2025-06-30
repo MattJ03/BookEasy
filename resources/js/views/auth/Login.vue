@@ -13,9 +13,11 @@
             </div>
             <button type="submit" class="login-button">Login</button>
         </form>
+        <router-link to="register"> Register an Account</router-link>
     </div>
 </template>
 <script>
+import { ref } from 'vue';
 
 </script>
 <style>
@@ -40,6 +42,6 @@
     text-align: center;
 }
 .form-group {
-
+    margin-bottom: 1rem;
 }
 </style>
