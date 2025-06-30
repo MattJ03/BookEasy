@@ -1,20 +1,22 @@
 <template>
+    <h2 class="h2">Register</h2>
     <div class="registration-container">
-        <h2 class="h2">Register</h2>
-         <form @submit.prevent="submitDetails" ><
+
+         <form @submit.prevent="submitDetails" >
         <div class="form-group">
-            <label>Name</label>
+            <label>Name </label>
             <input v-model="form.name" type="text" required />
       </div>
         <div class="form-group">
-            <label>Email</label>
+            <label>Email </label>
             <input v-model="form.email" type="text" required />
         </div>
         <div class="form-group">
-            <label>Password</label>
+            <label>Password </label>
             <input v-model="form.password" type="password" required />
         </div>
         <button type="submit" class="submit-button">Register</button>
+        <router-link to="login"> Already have an account?</router-link>
          </form>
     </div>
 </template>
@@ -57,8 +59,11 @@
     justify-content: center;
     max-width: 400px;
     background: #fff;
+    color: #2c3e50;
     border-radius: 1px;
     padding: 2rem;
+    text-align: center;
+
 }
 .form-group {
     margin-bottom: 1rem;
@@ -66,6 +71,9 @@
 .h2 {
     color: #0a0a0a;
     font-size: 24px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .submit-button {
