@@ -83,10 +83,13 @@
     color: #1b1b18;
     border: none;
     border-radius: 4px;
+    width: 70px;
+    height: 30px;
 
 }
 .submit-button:hover {
     background-color: #4a5568;
 }
+
 
 </style>

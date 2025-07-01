@@ -72,4 +72,13 @@ export default {
 .form-group {
     margin-bottom: 1rem;
 }
+.login-button {
+    height: 30px;
+    width: 70px;
+    border: none;
+    border-radius: 4px;
+}
+.login-button:hover {
+    background-color: #4a5568;
+}
 </style>
