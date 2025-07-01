@@ -24,6 +24,7 @@
  import { ref } from 'vue';
  import { reactive } from 'vue';
  import { useRouter } from 'vue-router';
+ import axios from 'axios';
 
  export default {
      setup() {
@@ -39,7 +40,7 @@
          const submitDetails = async () => {
              try {
                  await axios.post('/api/register', form);
-                 router.push('/login');
+               await router.push('/login');
              } catch (error) {
                  error1.value = error.response?.data?.error || 'Registration Failed';
              }

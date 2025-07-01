@@ -1,29 +1,49 @@
 <template>
-    <h2 class="h2">Login</h2>
-    <div class="registration-container">
 
-        <form @submit.prevent="submit-details">
+    <div class="registration-container">
+        <h2 class="h2">Login</h2>
+        <form @submit.prevent="loginDetails">
           <div class="form-group">
-              <label> Email</label>
+              <label><strong>Email </strong></label>
               <input v-model="form.email" type="text" required />
           </div>
             <div class="form-group">
-                <label> Password</label>
+                <label><strong> Password </strong></label>
                 <input v-model="form.password" type="password" required />
             </div>
             <button type="submit" class="login-button">Login</button>
-        </form>
         <router-link to="register"> Register an Account</router-link>
+        </form>
     </div>
 </template>
 <script>
 import { ref } from 'vue';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
-
+import axios from 'axios';
 export default {
     setup() {
-        const router = useRoiter();
+        const router = useRouter();
+
+        const error = ref(null);
+        const form = reactive({
+            email: '',
+            password: '',
+        });
+
+        const loginDetails = async () => {
+            try {
+                await axios.get('sanctum/csrf-cookie');
+                await axios.post('/api/login', form);
+            } catch (error) {
+                error.value = error.response.data.error;
+            }
+        }
+        return {
+            form,
+            loginDetails,
+            error,
+        }
     }
 }
 
