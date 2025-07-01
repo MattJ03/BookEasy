@@ -1,18 +1,18 @@
 <template>
-    <h2 class="h2">Register</h2>
-    <div class="registration-container">
 
+    <div class="registration-container">
+      <h2 class="h2">Register</h2>
          <form @submit.prevent="submitDetails" >
         <div class="form-group">
-            <label>Name </label>
+            <label><strong>Name  </strong></label>
             <input v-model="form.name" type="text" required />
       </div>
         <div class="form-group">
-            <label>Email </label>
+            <label><strong>Email </strong></label>
             <input v-model="form.email" type="text" required />
         </div>
         <div class="form-group">
-            <label>Password </label>
+            <label><strong>Password </strong></label>
             <input v-model="form.password" type="password" required />
         </div>
         <button type="submit" class="submit-button">Register</button>
