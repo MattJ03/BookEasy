@@ -1,6 +1,6 @@
 <template>
     <div class="listing-card">
-        <img :src="'/${listing.image}'" :alt="listing.name" class="image">
+        <img :src="'/storage/${listing.image}'" :alt="listing.name" class="image">
         <h3>{{ listing.name }}</h3>
         <p><strong>{{ listing.price }}</strong></p>
         <p>{{ listing.id }}</p>
@@ -19,12 +19,15 @@ const { listing } = defineProps({
 </script>
 <style>
 .listing-card {
-    height: 50px;
+    height: 300px;
     width: 50px;
-    margin: 100px auto;
+    margin: 50px auto;
     background-color: white;
+    flex-direction: column;
     display: flex;
     border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+
 }
 .image {
     border-radius: 50px;
