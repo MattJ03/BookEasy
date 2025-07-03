@@ -1,7 +1,11 @@
 <template>
 <div class="listings">
-    <p v-if=""
-
+    <p v-if="loading">...</p>
+    <p v-else-if="!listings">Currently no listings</p>
+    <div v-else="listings-grid">
+    <ListingCard v-for="listing in listings" :key="listing.id" :listing="listing">
+    </ListingCard>
+    </div>
 </div>
 </template>
 <script setup>
@@ -35,7 +39,8 @@ onMounted(async () => {
     flex-direction: column;
     gap: 1rem;
 }
-
-
-
+.listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
 </style>
