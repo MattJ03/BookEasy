@@ -2,7 +2,7 @@
 <div class="listings">
     <p v-if="loading">...</p>
     <p v-else-if="!listings">Currently no listings</p>
-    <div v-else="listings-grid">
+    <div v-else class="listing-grid">
     <ListingCard v-for="listing in listings" :key="listing.id" :listing="listing">
     </ListingCard>
     </div>
@@ -17,7 +17,7 @@ import { onMounted } from 'vue';
 import axios from 'axios';
 
 const router = useRouter();
-const listings = reactive({});
+const listings = ref([]);
 const loading = ref(true);
 const error = ref('');
 
