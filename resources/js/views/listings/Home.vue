@@ -1,7 +1,7 @@
 <template>
 <div class="listings">
     <p v-if="loading">...</p>
-    <p v-else-if="!listings">Currently no listings</p>
+    <p v-else-if="listings.length === 0">Currently no listings</p>
     <div v-else class="listing-grid">
     <ListingCard v-for="listing in listings" :key="listing.id" :listing="listing">
     </ListingCard>
@@ -24,7 +24,7 @@ const error = ref('');
 onMounted(async () => {
     try {
         const response = await axios.get('/api/listings/index');
-        listing.value = response.data;
+        listings.value = response.data;
     } catch(error) {
         error.value = error.response.data.errors;
     } finally {
