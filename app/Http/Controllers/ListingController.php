@@ -32,10 +32,29 @@ class ListingController extends Controller
         return response()->json($listing, 201);
     }
 
-   public function show($id) {
-        $listing = Listing::find($id);
-        if(!$listing) {}
-        return response()->json('Message', 'No listing found');
-   }
+   public function show($id)
+   {
+       $listing = Listing::find($id);
+       if (!$listing) {
+           return response()->json('Message', 'No listing found');
+       }
+           return response()->json($listing);
+       }
 
-}
+       public function update(Request $request, ListingService $listingService, Listing $listing) {
+        $validatedData = $request->validate([
+            'name' => 'required|max:30',
+            'price' => 'required|numeric',
+            'availability' => 'required|boolean',
+            'user_id' => 'required',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+        ]);
+         $listingUpdate = $listingService->update($listing, $validatedData);
+         return response()->json($listingUpdate, 201);
+       }
+
+       public function destroy($id) {
+        $listing = Listing::find
+       }
+   }
