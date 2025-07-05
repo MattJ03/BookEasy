@@ -20,9 +20,10 @@ const form = reactive({
     image: ""
 });
 
-const submitForm = (async) => {
+const submitForm = async () => {
     try {
-        await axios.post('/api/listings/store');
+        await axios.post('/api/listings/store', form);
+        await router.push('/home');
     }
 }
 </script>
