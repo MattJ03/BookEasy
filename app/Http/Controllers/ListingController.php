@@ -55,6 +55,11 @@ class ListingController extends Controller
        }
 
        public function destroy($id) {
-        $listing = Listing::find
+        $listing = Listing::find($id);
+        if(!$listing) {
+            return response()->json('Message', 'No listing found');
+        }
+        $listing->delete();
+        return response()->json('listing deleted', 201);
        }
    }

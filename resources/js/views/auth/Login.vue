@@ -71,6 +71,7 @@ export default {
 }
 .form-group {
     margin-bottom: 1rem;
+    border-radius: 10px;
 }
 .login-button {
     height: 30px;

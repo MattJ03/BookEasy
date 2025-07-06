@@ -69,6 +69,7 @@
 }
 .form-group {
     margin-bottom: 1rem;
+    border-radius: 10px;
 }
 .h2 {
     color: #0a0a0a;

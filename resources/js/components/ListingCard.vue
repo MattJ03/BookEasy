@@ -20,7 +20,8 @@ const { listing } = defineProps({
 <style>
 .listing-card {
     height: 300px;
-    width: 50px;
+    width: 200px;
+    border: 2px solid lightgray;
     margin: 50px auto;
     background-color: white;
     flex-direction: column;
