@@ -1,4 +1,7 @@
 <template>
+    <nav-bar>
+
+    </nav-bar>
 <div class="listings">
     <p v-if="loading">...</p>
     <p v-else-if="listings.length === 0">Currently no listings</p>
@@ -13,6 +16,7 @@ import { ref } from 'vue';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import ListingCard from "../../components/ListingCard.vue";
+import NavBar from '../../components/NavBar.vue';
 import { onMounted } from 'vue';
 import axios from 'axios';
 
