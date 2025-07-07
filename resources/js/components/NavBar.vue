@@ -2,6 +2,7 @@
     <div class="nav-bar">
         <router-link to="home">Home</router-link>
         <router-link to="create">Create</router-link>
+        <router-link to="dashboard">Dashboard</router-link>
     </div>
 </template>
 <style>
@@ -16,5 +17,6 @@
     left: 0;
     width: 100%;
     z-index: 1000;
+    border-radius: 120px;
 }
 </style>
