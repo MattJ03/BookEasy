@@ -21,6 +21,7 @@
                 <label><strong>Available to Book? </strong></label>
                 <input v-model="form.availability" type="checkbox" value="yes">
             </div>
+            <button type="submit">Submit</button>
         </form>
     </div>
 
@@ -42,13 +43,25 @@ const form = reactive({
 });
 
 const submitForm = async () => {
+    const formData = new FormData();
     try {
-        await axios.post('/api/listings/store', form);
-        await router.push('/home');
-    } catch(error) {
-        error.value = error.response.data.errors;
+        formData.append("name", form.name);
+        formData.append("price", form.price);
+        formData.append("availability", form.availability ? 1 : 0);
+        formData.append("image", form.image);
+
+        await axios.post("/api/listings/store", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        });
+
+        await router.push("/home");
+    } catch (err) {
+        console.error(err);
+        error.value = err.response?.data?.message || "Something went wrong";
     }
-}
+    }
 </script>
 <style>
 .create-form {
