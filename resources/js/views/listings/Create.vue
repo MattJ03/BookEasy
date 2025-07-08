@@ -11,7 +11,7 @@
             </div>
             <div class="form-group">
                 <label><strong>Image of property </strong></label>
-                <input type="file" accept="image/*" class="image-listing" required>
+                <input type="file" accept="image/*" @change="onFileChange" class="image-listing" required>
             </div>
             <div class="form-group">
                 <label><strong>Price </strong> </label>
@@ -48,9 +48,9 @@ const submitForm = async () => {
         formData.append("name", form.name);
         formData.append("price", form.price);
         formData.append("availability", form.availability ? 1 : 0);
-        formData.append("image", form.image);
+        formData.append("image_path", form.image);
 
-        await axios.post("/api/listings/store", formData, {
+        await axios.post("/api/listing", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }
@@ -62,6 +62,11 @@ const submitForm = async () => {
         error.value = err.response?.data?.message || "Something went wrong";
     }
     }
+
+    const onFileChange = (e) => {
+    form.image = e.target.files[0];
+    }
+
 </script>
 <style>
 .create-form {
@@ -92,10 +97,12 @@ const submitForm = async () => {
 .name-form {
     border-radius: 10px;
     background: #edf2f7;
+    height: 20px;
 }
 .price-form {
     border-radius: 10px;
     background: #edf2f7;
+    height: 20px;
 }
 .account-info {
     width: 30px;

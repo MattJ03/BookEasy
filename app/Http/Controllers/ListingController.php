@@ -23,7 +23,6 @@ class ListingController extends Controller
             'name' => 'required|max:30',
             'price' => 'required|numeric',
             'availability' => 'required|boolean',
-            'user_id' => 'required',
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);
@@ -46,7 +45,6 @@ class ListingController extends Controller
             'name' => 'required|max:30',
             'price' => 'required|numeric',
             'availability' => 'required|boolean',
-            'user_id' => 'required',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);

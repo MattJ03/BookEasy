@@ -35,6 +35,7 @@ export default {
             try {
                 await axios.get('sanctum/csrf-cookie');
                 await axios.post('/api/login', form);
+                await router.push('/home');
             } catch (error) {
                 error.value = error.response.data.error;
             }
