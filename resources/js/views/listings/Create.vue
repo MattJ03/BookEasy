@@ -41,6 +41,7 @@ const form = reactive({
     availability: true,
     image: ""
 });
+const token = localStorage.getItem('token');
 
 const submitForm = async () => {
     const formData = new FormData();
@@ -52,6 +53,7 @@ const submitForm = async () => {
 
         await axios.post("/api/listing", formData, {
             headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
             }
         });

@@ -24,10 +24,16 @@ const router = useRouter();
 const listings = ref([]);
 const loading = ref(true);
 const error = ref('');
+const token = localStorage.getItem('token');
 
 onMounted(async () => {
     try {
-        const response = await axios.get('/api/listings/index');
+        const response = await axios.get('/api/listings/index', {
+            headers: {
+                Authorisation: `Bearer ${token}`,
+            },
+        });
+
         listings.value = response.data;
     } catch(error) {
         error.value = error.response.data.errors;
