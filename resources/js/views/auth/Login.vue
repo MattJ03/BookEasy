@@ -35,7 +35,7 @@ export default {
             try {
                 await axios.get('sanctum/csrf-cookie');
               const response = await axios.post('/api/login', form);
-              const token = response.data.token;
+              const token = response.data.access_token;
               localStorage.setItem('token', token);
                 await router.push('/home');
             } catch (error) {

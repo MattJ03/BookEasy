@@ -25,6 +25,7 @@ const listings = ref([]);
 const loading = ref(true);
 const error = ref('');
 const token = localStorage.getItem('token');
+console.log(token);
 
 onMounted(async () => {
     try {

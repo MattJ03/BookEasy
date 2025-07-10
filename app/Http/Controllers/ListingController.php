@@ -26,6 +26,7 @@ class ListingController extends Controller
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);
+        $validatedData['image_path'] = $request->file('image_path');
 
        $listing = $listingService->store($validatedData);
         return response()->json($listing, 201);
