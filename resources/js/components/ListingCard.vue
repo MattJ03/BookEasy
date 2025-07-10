@@ -32,5 +32,6 @@ const { listing } = defineProps({
 }
 .image {
     border-radius: 50px;
+
 }
 </style>

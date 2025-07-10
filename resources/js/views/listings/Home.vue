@@ -31,7 +31,7 @@ onMounted(async () => {
     try {
         const response = await axios.get('/api/listings/index', {
             headers: {
-                Authorisation: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
             },
         });
 
