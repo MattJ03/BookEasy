@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Listing extends Model
 {
-    protected $fillable = ['name', 'price', 'availability', 'user_id', 'image_path'];
+    protected $fillable = ['name', 'price', 'availability', 'user_id', 'image_path', 'user_id'];
 
     public function users(): BelongsTo {
         return $this->belongsTo(User::class);

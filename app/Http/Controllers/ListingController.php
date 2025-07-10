@@ -23,7 +23,7 @@ class ListingController extends Controller
             'name' => 'required|max:30',
             'price' => 'required|numeric',
             'availability' => 'required|boolean',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);
         $validatedData['image_path'] = $request->file('image_path');

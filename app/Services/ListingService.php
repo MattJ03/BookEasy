@@ -3,6 +3,7 @@
 namespace App\Services;
 use App\Models\Listing;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ListingService {
 
@@ -13,6 +14,7 @@ class ListingService {
             'name' => $data['name'],
             'price' => $data['price'],
             'availability' => $data['availability'],
+            'user_id' => Auth::user()->id,
             'image_path' => $path,
         ]);
         return $listing;
@@ -21,12 +23,12 @@ class ListingService {
     public function update(Listing $listing, array $data): Listing {
         $path = $data['image_path']->store('images', 'public');
 
-        $listing = Listing::update([
-           'name' => $data['name'],
-           'price' => $data['price'],
-           'availability' => $data['availability'],
-           'user_id' => Auth::user()->id,
-           'image_path' => $path,
+        $listing->update([
+            'name' => $data['name'],
+            'price' => $data['price'],
+            'availability' => $data['availability'],
+            'user_id' => Auth::user()->id,
+            'image_path' => $path,
         ]);
         return $listing;
     }
