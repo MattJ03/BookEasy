@@ -35,7 +35,7 @@ onMounted(async () => {
             },
         });
 
-        listings.value = response.data;
+        listings.value = response.data.data;
     } catch(error) {
         error.value = error.response.data.errors;
     } finally {

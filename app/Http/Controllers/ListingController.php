@@ -14,7 +14,7 @@ class ListingController extends Controller
 {
     public function index() {
         $listings = Listing::where('user_id', '!=', Auth::id())
-            ->paginate(25);
+            ->paginate(22);
         return response()->json($listings);
 
     }

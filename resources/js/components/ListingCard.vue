@@ -1,6 +1,6 @@
 <template>
     <div class="listing-card">
-        <img :src="'/storage/${listing.image}'" :alt="listing.name" class="image">
+        <img :src="'/storage/${listing.image_path}'" :alt="listing.name" class="image">
         <h3>{{ listing.name }}</h3>
         <p><strong>{{ listing.price }}</strong></p>
         <p>{{ listing.id }}</p>
