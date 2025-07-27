@@ -1,16 +1,20 @@
 <template>
-    <nav-bar>
+    <nav-bar></nav-bar>
 
-    </nav-bar>
-<div class="listings">
-    <p v-if="loading">...</p>
-    <p v-else-if="listings.length === 0">Currently no listings</p>
-    <div v-else class="listing-grid">
-    <ListingCard v-for="listing in listings" :key="listing.id" :listing="listing">
-    </ListingCard>
+    <div class="listings">
+        <p v-if="loading">Loading...</p>
+        <p v-else-if="listings.length === 0">Currently no listings</p>
+
+        <div v-else class="listing-grid">
+            <ListingCard
+                v-for="listing in listings"
+                :key="listing.id"
+                :listing="listing"
+            />
+        </div>
     </div>
-</div>
 </template>
+
 <script setup>
 import { ref } from 'vue';
 import { reactive } from 'vue';
@@ -18,6 +22,7 @@ import { useRouter } from 'vue-router';
 import ListingCard from "../../components/ListingCard.vue";
 import NavBar from '../../components/NavBar.vue';
 import { onMounted } from 'vue';
+import { computed } from 'vue';
 import axios from 'axios';
 
 const router = useRouter();
@@ -35,13 +40,15 @@ onMounted(async () => {
             },
         });
 
-        listings.value = response.data.data;
+        listings.value = response.data;
     } catch(error) {
         error.value = error.response.data.errors;
     } finally {
         loading.value = false;
     }
 });
+
+
 </script>
 
 <style>

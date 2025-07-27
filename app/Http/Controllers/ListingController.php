@@ -13,10 +13,8 @@ use App\Services\ListingService;
 class ListingController extends Controller
 {
     public function index() {
-        $listings = Listing::where('user_id', '!=', Auth::id())
-            ->paginate(22);
-        return response()->json($listings);
-
+        $listings = Listing::paginate(25);
+        return response()->json($listings, 200);
     }
     public function store(Request $request, ListingService $listingService) {
         $validatedData = $request->validate([
